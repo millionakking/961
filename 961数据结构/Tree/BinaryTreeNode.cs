@@ -13,6 +13,9 @@ namespace _961数据结构.Tree
             rightChildNode = null;
         }
         public int nodeValue { get; set; }
+
+        public int BlanceFacor { get; set; }
+
         public BinaryTreeNode leftChildNode { get; set; }
         public BinaryTreeNode rightChildNode { get; set; }
 

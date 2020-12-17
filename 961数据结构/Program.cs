@@ -13,10 +13,10 @@ namespace _961数据结构
 
         static void testsort()
         {
-           
+
             int sortcount = 10;
             int[] sortarray = new int[sortcount];
-            for(int i=0;i<sortarray.Length;i++)
+            for (int i = 0; i < sortarray.Length; i++)
             {
                 sortarray[i] = random.Next(20);
             }
@@ -115,7 +115,7 @@ namespace _961数据结构
                 else
                 {
                     Console.WriteLine("");
-                    Console.WriteLine("压栈失败: 当前压栈数{0}，是否栈满{1},当前栈内元素数{2}", i, stack.isFull(),stack.Count());
+                    Console.WriteLine("压栈失败: 当前压栈数{0}，是否栈满{1},当前栈内元素数{2}", i, stack.isFull(), stack.Count());
                     break;
                 }
             }
@@ -127,8 +127,8 @@ namespace _961数据结构
                 printStackTop(stack);
                 int? val = stack.pop();
 
-                
-                if(val == null)
+
+                if (val == null)
                 {
                     Console.WriteLine("");
                     Console.WriteLine("弹栈失败: 当前弹栈数{0}，是否栈空{1},当前栈内元素数{2}", i, stack.isEmpty(), stack.Count());
@@ -137,9 +137,9 @@ namespace _961数据结构
             }
         }
 
-        static void printintarray(int [] array)
+        static void printintarray(int[] array)
         {
-            for(int i =0;i<array.Length;i++)
+            for (int i = 0; i < array.Length; i++)
             {
                 Console.Write(String.Format("{0} ", array[i]));
             }
@@ -172,7 +172,7 @@ namespace _961数据结构
             int findval = random.Next(maxvals);
             Console.WriteLine(String.Format("查找数字为:{0}", findval));
 
-           
+
             int idx = Search.Searcher.sequenceSearch(vals, findval);
             Console.WriteLine(String.Format("顺序查找结果:{0}", idx));
             Console.WriteLine("");
@@ -191,6 +191,151 @@ namespace _961数据结构
             {
                 Console.Write(String.Format("{0} ", se.nodeValue));
             }
+        }
+
+        static void testAvlTree()
+        {
+            int treenodenum = 10;
+            int[] vals = new int[treenodenum];
+            for (int i = 0; i < treenodenum; i++)
+            {
+                vals[i] = i;
+            }
+
+            for(int i = 0;i<treenodenum;i++)
+            {
+                int idx1 = random.Next(treenodenum);
+                int idx2 = random.Next(treenodenum);
+                int tmp = vals[idx1];
+                vals[idx1] = vals[idx2];
+                vals[idx2] = tmp;
+            }
+
+            Console.WriteLine("构建树节点:");
+            printintarray(vals);
+            Console.WriteLine("");
+
+            AVLTree avltree = new AVLTree();
+            avltree.Construct(vals);
+
+            Console.WriteLine("先序遍历结果:");
+            Console.WriteLine("递归调用先序遍历结果:");
+            var sequence = avltree.DLRSequence();
+            printBinaryNode(sequence);
+            Console.WriteLine("");
+
+            Console.WriteLine("中序遍历结果:");
+            sequence = avltree.LDRSequence();
+            printBinaryNode(sequence);
+            Console.WriteLine("");
+
+            for (int i = 0; i < treenodenum; i++)
+            {
+                var findval = random.Next(treenodenum);
+                Console.WriteLine(String.Format("查找数字为:{0}", findval));
+                var node = avltree.Find(findval);
+                if (node == null)
+                    Console.WriteLine(String.Format("未能查找到数字:{0}", findval));
+                else
+                {
+                    Console.WriteLine(String.Format("成功查找到数字:{0}", node.nodeValue));
+                }
+
+                if (node != null)
+                {
+                    var bstval = node.nodeValue;
+                    Console.WriteLine(String.Format("测试删除节点:{0}", bstval));
+                    var bok = avltree.DelNode(node.nodeValue);
+                    if (bok)
+                    {
+                        Console.WriteLine(String.Format("成功删除节点:{0}", bstval));
+                    }
+                    else
+                    {
+                        Console.WriteLine(String.Format("删除节点:{0} 失败", bstval));
+                    }
+
+                    Console.WriteLine("先序遍历结果:");
+                    Console.WriteLine("递归调用先序遍历结果:");
+                    sequence = avltree.DLRSequence();
+                    printBinaryNode(sequence);
+                    Console.WriteLine("");
+
+                    Console.WriteLine("中序遍历结果:");
+                    sequence = avltree.LDRSequence();
+                    printBinaryNode(sequence);
+                    Console.WriteLine("");
+                }
+            }
+        }
+
+        static void testBSTTree()
+        {
+            int treenodenum = 20;
+            int[] vals = new int[treenodenum];
+            for (int i = 0; i < treenodenum; i++)
+            {
+                vals[i] = random.Next(treenodenum);
+            }
+
+            Console.WriteLine("构建树节点:");
+            printintarray(vals);
+            Console.WriteLine("");
+
+            BSTTree bsttree = new BSTTree();
+            bsttree.Construct(vals);
+
+            Console.WriteLine("先序遍历结果:");
+            Console.WriteLine("递归调用先序遍历结果:");
+            var sequence = bsttree.DLRSequence();
+            printBinaryNode(sequence);
+            Console.WriteLine("");
+
+            Console.WriteLine("中序遍历结果:");
+            sequence = bsttree.LDRSequence();
+            printBinaryNode(sequence);
+            Console.WriteLine("");
+
+
+            for (int i = 0; i < treenodenum; i++)
+            {
+                var findval = random.Next(treenodenum);
+                Console.WriteLine(String.Format("查找数字为:{0}", findval));
+                var node = bsttree.Find(findval);
+                if(node == null)
+                    Console.WriteLine(String.Format("未能查找到数字:{0}", findval));
+                else
+                {
+                    Console.WriteLine(String.Format("成功查找到数字:{0}", node.nodeValue));
+                }
+
+                if (node != null)
+                {
+                    var bstval = node.nodeValue;
+                    Console.WriteLine(String.Format("测试删除节点:{0}", bstval));
+                    var bok = bsttree.DelNode(node.nodeValue);
+                    if(bok)
+                    {
+                        Console.WriteLine(String.Format("成功删除节点:{0}", bstval));
+                    }
+                    else
+                    {
+                        Console.WriteLine(String.Format("删除节点:{0} 失败", bstval));
+                    }
+
+                    Console.WriteLine("先序遍历结果:");
+                    Console.WriteLine("递归调用先序遍历结果:");
+                    sequence = bsttree.DLRSequence();
+                    printBinaryNode(sequence);
+                    Console.WriteLine("");
+
+                    Console.WriteLine("中序遍历结果:");
+                    sequence = bsttree.LDRSequence();
+                    printBinaryNode(sequence);
+                    Console.WriteLine("");
+                }
+            }
+
         }
 
         static void testBinaryTree()
@@ -275,7 +420,7 @@ namespace _961数据结构
             printBinaryNode(sequence);
             Console.WriteLine("");
 
-           
+
         }
 
         static void Main(string[] args)
@@ -284,7 +429,9 @@ namespace _961数据结构
             //testStack961();
             //testBinaryTree();
             //testsort();
-            testSearch();
+            //testBSTTree();
+            testAvlTree();
+            //testSearch();
             Console.ReadKey();
         }
     }

@@ -239,6 +239,68 @@ namespace _961数据结构.Tree
             }
         }
 
+        public int Height()
+        {
+            return Height(_head);
+        }
+
+        protected int Height(BinaryTreeNode node)
+        {
+            if (node == null)
+            {
+                return 0;
+            }
+
+            int left = Height(node.leftChildNode);
+            int right = Height(node.rightChildNode);
+
+            //平衡因子
+            node.BlanceFacor = left - right;
+
+            return Math.Max(left, right) + 1;
+        }
+
+        public bool isBalance()
+        {
+            int height;
+            return isBalance(_head, out height);
+        }
+
+        protected bool isBalance(BinaryTreeNode node, out int height)
+        {
+            if (node == null)
+            {
+                height = 0;
+                return true;
+            }
+            int leftheight, rightheight;
+            bool leftok, rightok;
+            leftok = isBalance(node.leftChildNode,out leftheight);
+            if (!leftok)
+            {
+                height = -1;
+                return false;
+            }
+
+            rightok = isBalance(node.rightChildNode,out rightheight);
+            if (!rightok)
+            {
+                height = -1;
+                return false;
+            }
+
+
+            height = Math.Max(leftheight, rightheight) + 1;
+
+            int diff = Math.Abs(leftheight - rightheight);
+            if(diff <= 1)
+            {
+                return true;
+            }
+
+            return false;
+        }
+
         void LRDRecursive(BinaryTreeNode node, List<BinaryTreeNode> sequence)
         {
             if (node != null)
