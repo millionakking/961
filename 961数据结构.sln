@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30717.126
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "961数据结构", "961数据结构\961数据结构.csproj", "{5A0B42CD-B168-4759-BD25-BC6734F5E816}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{5A0B42CD-B168-4759-BD25-BC6734F5E816}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5A0B42CD-B168-4759-BD25-BC6734F5E816}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5A0B42CD-B168-4759-BD25-BC6734F5E816}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5A0B42CD-B168-4759-BD25-BC6734F5E816}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {7B91BE9F-01CA-4A11-AFB3-7E2D78459DE7}
+	EndGlobalSection
+EndGlobal
