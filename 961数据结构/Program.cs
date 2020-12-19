@@ -139,6 +139,7 @@ namespace _961数据结构
 
         static void printintarray(int[] array)
         {
+            if (array == null) return;
             for (int i = 0; i < array.Length; i++)
             {
                 Console.Write(String.Format("{0} ", array[i]));
@@ -267,6 +268,73 @@ namespace _961数据结构
                     Console.WriteLine("");
                 }
             }
+        }
+
+        static void testHeap()
+        {
+            int treenodenum = 10;
+            int[] vals = new int[treenodenum];
+            for (int i = 0; i < treenodenum; i++)
+            {
+                vals[i] = random.Next(treenodenum);
+            }
+
+
+            Console.WriteLine("构建堆节点:");
+            printintarray(vals);
+            Console.WriteLine("");
+
+            Heap<int> bsttree = new Heap<int>();
+            bsttree.Heapify(vals);
+
+            Console.WriteLine("堆化结果:");
+            var sequence = bsttree.getSequence();
+            printintarray(sequence);
+            Console.WriteLine("");
+
+            Console.WriteLine("先序遍历结果:");
+            Console.WriteLine("递归调用先序遍历结果:");
+            sequence = bsttree.getDLRSequenct();
+            printintarray(sequence);
+            Console.WriteLine("");
+
+            Console.WriteLine("中序遍历结果:");
+            sequence = bsttree.getLDRSequenct();
+            printintarray(sequence);
+            Console.WriteLine("");
+
+
+            List<int> sortlist = new List<int>();
+            Console.WriteLine("堆化排序结果:");
+            while (bsttree.Count()> 0)
+            {
+                Console.WriteLine("弹出最大值:");
+                int extrenum = bsttree.pop();
+                sortlist.Add(extrenum);
+                Console.Write(String.Format("{0} ", extrenum));
+                Console.WriteLine("");
+
+                Console.WriteLine("排序序列:");
+                printintarray(sortlist.ToArray());
+                Console.WriteLine("");
+
+                Console.WriteLine("堆化结果:");
+                sequence = bsttree.getSequence();
+                printintarray(sequence);
+                Console.WriteLine("");
+
+                Console.WriteLine("先序遍历结果:");
+                Console.WriteLine("递归调用先序遍历结果:");
+                sequence = bsttree.getDLRSequenct();
+                printintarray(sequence);
+                Console.WriteLine("");
+
+                Console.WriteLine("中序遍历结果:");
+                sequence = bsttree.getLDRSequenct();
+                printintarray(sequence);
+                Console.WriteLine("");
+            }
+            Console.WriteLine("");
         }
 
         static void testBSTTree()
@@ -430,7 +498,8 @@ namespace _961数据结构
             //testBinaryTree();
             //testsort();
             //testBSTTree();
-            testAvlTree();
+            //testAvlTree();
+            testHeap();
             //testSearch();
             Console.ReadKey();
         }
