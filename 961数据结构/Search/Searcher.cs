@@ -19,7 +19,7 @@ namespace _961数据结构.Search
 
         public static int binarySearch(int[] array, int val)
         {
-            Sort.InsertionSort(array);
+            Sort<int>.InsertionSort(array);
 
             int head = array.Length - 1;
             int tail = 0;

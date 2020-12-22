@@ -59,7 +59,7 @@ namespace _961数据结构.Tree
 
             while(nodes.Count > 1)
             {
-                Sort.InsertionSort(nodes);
+                Sort<IComparable>.InsertionSort(nodes);
                 BinaryTreeNode node = new BinaryTreeNode();
                 BinaryTreeNode node1 = nodes[0] as BinaryTreeNode;
                 BinaryTreeNode node2 = nodes[1] as BinaryTreeNode;
