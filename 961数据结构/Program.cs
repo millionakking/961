@@ -256,6 +256,17 @@ namespace _961数据结构
             }
         }
 
+        static void printMiniBuildTreeSequence(MinimumTreeNode[] nodes)
+        {
+            foreach (var se in nodes)
+            {
+                if(string.IsNullOrEmpty(se.ParentName))
+                    Console.Write(String.Format("首节点 : {0} |", se.Name));
+                else
+                    Console.Write(String.Format(" {0}-{1} |", se.ParentName, se.Name));
+            }
+        }
+
         static void testAvlTree()
         {
             int treenodenum = 10;
@@ -646,6 +657,17 @@ namespace _961数据结构
             
             var minitree = graph.miniGeneralTree_Prim(0);
             Console.WriteLine(String.Format("Prim 生成树: 代价{0}", minitree.TotalCost));
+            Console.WriteLine("Prim 生成树: 生成路径:");
+            var minibuildsequence = minitree.BuildSequence;
+            printMiniBuildTreeSequence(minibuildsequence);
+            Console.WriteLine("");
+
+            minitree = graph.miniGeneralTree_Kruskal();
+            Console.WriteLine(String.Format("Kruskal 生成树: 代价{0}", minitree.TotalCost));
+            Console.WriteLine("Kruskal 生成树: 生成路径:");
+            minibuildsequence = minitree.BuildSequence;
+            printMiniBuildTreeSequence(minibuildsequence);
+            Console.WriteLine("");
         }
 
         static void Main(string[] args)

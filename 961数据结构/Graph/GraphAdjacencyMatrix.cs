@@ -13,6 +13,27 @@ namespace _961数据结构.Graph
 
         protected int[][] _Edges = null;
 
+        public override GraphEdge[] AllEdges { get {
+
+                if (_Edges == null)
+                    return null;
+
+                List<GraphEdge> edges = new List<GraphEdge>();
+
+                for(int i=0;i<NodesCount;i++)
+                {
+                    for(int j=0;j<NodesCount;j++)
+                    {
+                        if(_Edges[i][j] >= 0)
+                        {
+                            edges.Add(new GraphEdge {  StartNode = _nodesarray[i], EndNode = _nodesarray[j], Weights = _Edges[i][j] });
+                        }
+                    }
+                }
+
+                return edges.ToArray();
+
+            } }
 
         public GraphAdjacencyMatrix(GraphNode[] nodes, GraphEdge[] edges)
         {
@@ -236,7 +257,7 @@ namespace _961数据结构.Graph
 
             node_v[nodeidx] = 1; //初始顶点放入最小生成树中
 
-            tree.Add(new MinimumTreeNode { Cost = 0, Name = _nodesarray[nodeidx].Name }, "");
+            tree.Add(new MinimumTreeNode { Cost = 0, Name = _nodesarray[nodeidx].Name , ParentName = string.Empty}, "");
 
             for(int i=0;i<NodesCount;i++)
             {
@@ -265,7 +286,7 @@ namespace _961数据结构.Graph
                     continue;
 
                 node_v[minIdx] = 1; //加入最小生成树
-                tree.Add(new MinimumTreeNode { Cost = minCost, Name = _nodesarray[minIdx].Name }, _nodesarray[edge_n[minIdx]].Name);
+                tree.Add(new MinimumTreeNode { Cost = minCost, Name = _nodesarray[minIdx].Name, ParentName = _nodesarray[edge_n[minIdx]].Name }, _nodesarray[edge_n[minIdx]].Name);
 
                 for (int j=0;j< NodesCount;j++) //更新当前最小生成树到其他节点的最小代价
                 {
@@ -284,9 +305,50 @@ namespace _961数据结构.Graph
             return tree;
         }
 
-        public override MinimumTree miniGeneralTree_Kruskal(int nodeidx)
+        public override MinimumTree miniGeneralTree_Kruskal()
         {
-            throw new NotImplementedException();
+            int[] vnodeset = new int[NodesCount]; //存放定点联通情况
+            for(int  i = 0;i<vnodeset.Length;i++) //初始化V集合为空
+            {
+                vnodeset[i] = i;
+            }
+
+            GraphEdge[] edges = AllEdges;
+            Sort<GraphEdge>.MergeSort(edges); //对边排序
+
+            int edgeidx = 0; //边的索引
+            int curMiniTreeEdgeCount = 0;
+
+            MinimumTree tree = new MinimumTree();
+
+            List<GraphEdge> selectededges = new List<GraphEdge>();
+
+            while (curMiniTreeEdgeCount < NodesCount - 1 )
+            {
+                var starnodetidx = _nodes[edges[edgeidx].StartNode.Name];
+                var Endnodetidx = _nodes[edges[edgeidx].EndNode.Name];
+
+                int setidx1 = vnodeset[starnodetidx];
+                int setidx2 = vnodeset[Endnodetidx];
+
+                if(setidx1 != setidx2)
+                {
+                    selectededges.Add(edges[edgeidx]);
+                     curMiniTreeEdgeCount++;
+                    for(int i = 0;i<NodesCount;i++)
+                    {
+                        if (vnodeset[i] == setidx2)
+                            vnodeset[i] = setidx1;
+                    }
+                }
+
+                edgeidx++;
+            }
+
+            tree.Add(selectededges);
+
+            return tree;
+                
         }
 
         public override int getWeight(int startidx, int endidx)

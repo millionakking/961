@@ -19,7 +19,9 @@ namespace _961数据结构.Graph
         public abstract List<GraphNode> BFS();
 
         public abstract MinimumTree miniGeneralTree_Prim(int nodeidx);
-        public abstract MinimumTree miniGeneralTree_Kruskal(int nodeidx);
+        public abstract MinimumTree miniGeneralTree_Kruskal();
+
+        public abstract GraphEdge[] AllEdges { get; }
 
         public abstract int getWeight(int startidx, int endidx);
     }
