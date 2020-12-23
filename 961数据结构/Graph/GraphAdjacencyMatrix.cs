@@ -11,29 +11,33 @@ namespace _961数据结构.Graph
     {
 
 
-        protected int[][] _Edges = null;
+        protected double[][] _Edges = null;
 
-        public override GraphEdge[] AllEdges { get {
+        public override GraphEdge[] AllEdges
+        {
+            get
+            {
 
                 if (_Edges == null)
                     return null;
 
                 List<GraphEdge> edges = new List<GraphEdge>();
 
-                for(int i=0;i<NodesCount;i++)
+                for (int i = 0; i < NodesCount; i++)
                 {
-                    for(int j=0;j<NodesCount;j++)
+                    for (int j = 0; j < NodesCount; j++)
                     {
-                        if(_Edges[i][j] >= 0)
+                        if (_Edges[i][j] >= 0)
                         {
-                            edges.Add(new GraphEdge {  StartNode = _nodesarray[i], EndNode = _nodesarray[j], Weights = _Edges[i][j] });
+                            edges.Add(new GraphEdge { StartNode = _nodesarray[i], EndNode = _nodesarray[j], Weights = _Edges[i][j] });
                         }
                     }
                 }
 
                 return edges.ToArray();
 
-            } }
+            }
+        }
 
         public GraphAdjacencyMatrix(GraphNode[] nodes, GraphEdge[] edges)
         {
@@ -50,10 +54,10 @@ namespace _961数据结构.Graph
             }
 
 
-            _Edges = new int[nodes.Length][];
+            _Edges = new double[nodes.Length][];
             for (int i = 0; i < _Edges.Length; i++)
             {
-                _Edges[i] = new int[nodes.Length];
+                _Edges[i] = new double[nodes.Length];
                 for (int j = 0; j < _Edges.Length; j++)
                 {
                     _Edges[i][j] = -1;
@@ -242,13 +246,13 @@ namespace _961数据结构.Graph
             if (nodeidx < 0 || nodeidx >= NodesCount)
                 return null;
 
-            int[] mini_costs = new int[NodesCount]; //到最小生成树最小代价
+            double[] mini_costs = new double[NodesCount]; //到最小生成树最小代价
             int[] node_v = new int[NodesCount]; //最小生成树顶点
             int[] edge_n = new int[NodesCount]; //最短边
 
-            for(int i =0;i<NodesCount;i++)
+            for (int i = 0; i < NodesCount; i++)
             {
-                mini_costs[i] = int.MaxValue; //Max代表不连通
+                mini_costs[i] = double.MaxValue; //Max代表不连通
                 node_v[i] = 0; //0代表当前未放入最小生成树中
                 edge_n[i] = -1; //当前i节点的最短路径是和谁产生的
             }
@@ -257,25 +261,25 @@ namespace _961数据结构.Graph
 
             node_v[nodeidx] = 1; //初始顶点放入最小生成树中
 
-            tree.Add(new MinimumTreeNode { Cost = 0, Name = _nodesarray[nodeidx].Name , ParentName = string.Empty}, "");
+            tree.Add(new MinimumTreeNode { Cost = 0, Name = _nodesarray[nodeidx].Name, ParentName = string.Empty }, "");
 
-            for(int i=0;i<NodesCount;i++)
+            for (int i = 0; i < NodesCount; i++)
             {
-                int cost = getWeight(nodeidx, i);
-                if(cost>=0)
+                double cost = getWeight(nodeidx, i);
+                if (cost >= 0)
                 {
                     mini_costs[i] = cost;
                     edge_n[i] = nodeidx;
                 }
             }
 
-            for(int i = 0;i<NodesCount;i++)
+            for (int i = 0; i < NodesCount; i++)
             {
-                int minCost = int.MaxValue;
+                double minCost = double.MaxValue;
                 int minIdx = -1;
-                for(int j =0;j<NodesCount;j++) //找当前最小节点
+                for (int j = 0; j < NodesCount; j++) //找当前最小节点
                 {
-                    if(mini_costs[j] < minCost && node_v[j] == 0)
+                    if (mini_costs[j] < minCost && node_v[j] == 0)
                     {
                         minIdx = j;
                         minCost = mini_costs[j];
@@ -288,11 +292,11 @@ namespace _961数据结构.Graph
                 node_v[minIdx] = 1; //加入最小生成树
                 tree.Add(new MinimumTreeNode { Cost = minCost, Name = _nodesarray[minIdx].Name, ParentName = _nodesarray[edge_n[minIdx]].Name }, _nodesarray[edge_n[minIdx]].Name);
 
-                for (int j=0;j< NodesCount;j++) //更新当前最小生成树到其他节点的最小代价
+                for (int j = 0; j < NodesCount; j++) //更新当前最小生成树到其他节点的最小代价
                 {
-                    if(node_v[j] == 0 )
+                    if (node_v[j] == 0)
                     {
-                        int cost = getWeight(minIdx, j);
+                        double cost = getWeight(minIdx, j);
                         if (cost >= 0 && cost < mini_costs[j]) //更新到最小生成树的代价和边
                         {
                             mini_costs[j] = cost;
@@ -308,7 +312,7 @@ namespace _961数据结构.Graph
         public override MinimumTree miniGeneralTree_Kruskal()
         {
             int[] vnodeset = new int[NodesCount]; //存放定点联通情况
-            for(int  i = 0;i<vnodeset.Length;i++) //初始化V集合为空
+            for (int i = 0; i < vnodeset.Length; i++) //初始化V集合为空
             {
                 vnodeset[i] = i;
             }
@@ -323,7 +327,7 @@ namespace _961数据结构.Graph
 
             List<GraphEdge> selectededges = new List<GraphEdge>();
 
-            while (curMiniTreeEdgeCount < NodesCount - 1 )
+            while (curMiniTreeEdgeCount < NodesCount - 1)
             {
                 var starnodetidx = _nodes[edges[edgeidx].StartNode.Name];
                 var Endnodetidx = _nodes[edges[edgeidx].EndNode.Name];
@@ -331,11 +335,11 @@ namespace _961数据结构.Graph
                 int setidx1 = vnodeset[starnodetidx];
                 int setidx2 = vnodeset[Endnodetidx];
 
-                if(setidx1 != setidx2)
+                if (setidx1 != setidx2)
                 {
                     selectededges.Add(edges[edgeidx]);
-                     curMiniTreeEdgeCount++;
-                    for(int i = 0;i<NodesCount;i++)
+                    curMiniTreeEdgeCount++;
+                    for (int i = 0; i < NodesCount; i++)
                     {
                         if (vnodeset[i] == setidx2)
                             vnodeset[i] = setidx1;
@@ -348,10 +352,10 @@ namespace _961数据结构.Graph
             tree.Add(selectededges);
 
             return tree;
-                
+
         }
 
-        public override int getWeight(int startidx, int endidx)
+        public override double getWeight(int startidx, int endidx)
         {
 
             if (startidx < 0 || startidx >= NodesCount)
@@ -361,6 +365,174 @@ namespace _961数据结构.Graph
                 return -1;
 
             return _Edges[startidx][endidx];
+        }
+
+
+        public override List<GraphEdge> MiniDistance_BSF(int startidx, int destidx)
+        {
+            if (startidx < 0 && startidx >= NodesCount)
+                return new List<GraphEdge>();
+
+            if (destidx < 0 && destidx >= NodesCount)
+                return new List<GraphEdge>();
+
+            if (startidx == destidx)
+                return new List<GraphEdge>();
+
+            Queue.Queue961<int> queue = new Queue961<int>();
+            queue.enqueue(startidx);
+
+            int[] visitednodes = new int[NodesCount];
+            int[] parentpathnodes = new int[NodesCount];
+            int[] nodedistance = new int[NodesCount];
+
+            for (int i = 0; i < NodesCount; i++)
+            {
+                nodedistance[i] = int.MaxValue;
+                visitednodes[i] = 0;
+                parentpathnodes[i] = -1;
+            }
+
+            visitednodes[startidx] = 1;
+            nodedistance[startidx] = 0;
+
+            while (!queue.isEmpty())
+            {
+                var curidx = queue.dequeue();
+                var neighbourenodes = getNeighbourNodes(curidx);
+                for (int i = 0; i < neighbourenodes.Count; i++)
+                {
+                    int nodeidx = neighbourenodes[i];
+                    if (visitednodes[nodeidx] == 0)
+                    {
+                        visitednodes[nodeidx] = 1; //已访问
+                        nodedistance[nodeidx] = nodedistance[curidx] + 1;
+                        parentpathnodes[nodeidx] = curidx;
+
+                        if (nodeidx == destidx) //找到跳出循环
+                        {
+                            queue.clear();
+                            break;
+                        }
+
+                        queue.enqueue(nodeidx);
+                    }
+                }
+            }
+
+
+            List<GraphEdge> edges = new List<GraphEdge>();
+            int pathendidx = destidx;
+            while(parentpathnodes[pathendidx] >= 0)
+            {
+                GraphEdge edge = new GraphEdge { Weights = 1, StartNode = _nodesarray[parentpathnodes[pathendidx]], EndNode = _nodesarray[pathendidx] };
+                pathendidx = parentpathnodes[pathendidx];
+                edges.Insert(0, edge);
+            }
+
+            return edges;
+        }
+
+        public override FloyPath MiniDistance_Floyd()
+        {
+            PathInfo[][] floydPathInfos = initFloyPath();
+
+            for(int k=0;k<NodesCount;k++)
+            {
+                for(int i = 0;i<NodesCount;i++)
+                    for(int j=0;j<NodesCount;j++)
+                        if(floydPathInfos[i][k].Distance != Double.MaxValue && floydPathInfos[k][j].Distance != Double.MaxValue && floydPathInfos[i][j].Distance > floydPathInfos[i][k].Distance + floydPathInfos[k][j].Distance)
+                        {
+                            floydPathInfos[i][j].Distance = floydPathInfos[i][k].Distance + floydPathInfos[k][j].Distance;
+                            floydPathInfos[i][j].TransferNodeIdx = k;
+                            floydPathInfos[i][j].TransferNodeName = _nodesarray[k].Name;
+                        }
+            }
+
+            return new FloyPath(floydPathInfos,_nodesarray);
+        }
+
+        protected override PathInfo[][] initFloyPath()
+        {
+            PathInfo[][] floydPathInfos = new PathInfo[NodesCount][];
+            for(int i=0;i<NodesCount;i++)
+            {
+                floydPathInfos[i] = new PathInfo[NodesCount];
+                for(int j=0;j< NodesCount;j++)
+                {
+                    floydPathInfos[i][j] = new PathInfo();
+                    if(_Edges[i][j] >= 0)
+                    {
+                        floydPathInfos[i][j].Distance = _Edges[i][j];
+                    }
+
+                    if(i == j)
+                    {
+                        floydPathInfos[i][j].Distance = 0;
+                    }
+                }
+            }
+
+            return floydPathInfos;
+        }
+
+        public override DijkstraPath MiniDistance_Dijkstra(int startidx)
+        {
+            if (startidx < 0 && startidx >= NodesCount)
+                return null;
+
+            PathInfo[] pathinfo = new PathInfo[NodesCount];
+            int[] nodev = new int[NodesCount];
+            for (int i  = 0;i<NodesCount;i++)
+            {
+                pathinfo[i] = new PathInfo();
+
+                if (_Edges[startidx][i] >= 0)
+                    pathinfo[i].Distance = _Edges[startidx][i];
+
+                if (i == startidx)
+                    pathinfo[i].Distance = 0;
+
+                nodev[i] = 0;
+            }
+
+            nodev[startidx] = 1;
+
+            for(int i=0;i<NodesCount;i++)
+            {
+                double mindis = double.MaxValue;
+                int minnodeidx = -1;
+                for(int j=0;j<NodesCount;j++) //找到当前最小边
+                {
+                    if(nodev[j]  == 0 && pathinfo[j].Distance < mindis)
+                    {
+                        mindis = pathinfo[j].Distance;
+                        minnodeidx = j;
+                    }
+                }
+
+                if (minnodeidx < 0) //全部找到，不用找了
+                    break;
+
+                nodev[minnodeidx] = 1;
+                for(int j=0;j<NodesCount;j++)
+                {
+                    double distance_s_to_m = pathinfo[minnodeidx].Distance;
+                    double distance_m_to_j = _Edges[minnodeidx][j] >= 0 ? _Edges[minnodeidx][j] : double.MaxValue;
+                    if(distance_m_to_j != double.MaxValue && pathinfo[j].Distance > distance_s_to_m + distance_m_to_j)
+                    {
+                        pathinfo[j].Distance = distance_s_to_m + distance_m_to_j;
+                        pathinfo[j].TransferNodeIdx = minnodeidx;
+                        pathinfo[j].TransferNodeName = _nodesarray[minnodeidx].Name;
+                    }
+                }
+
+            }
+
+
+            return new DijkstraPath(pathinfo, Nodes, startidx);
+
+
         }
     }
 }

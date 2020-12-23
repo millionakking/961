@@ -11,7 +11,7 @@ namespace _961数据结构.Tree
         protected List<MinimumTreeNode> _NodeList;
 
 
-        public int TotalCost
+        public double TotalCost
         {
             get
             {
@@ -19,7 +19,7 @@ namespace _961数据结构.Tree
                 if (_head == null)
                     return 0;
 
-                int cost = 0;
+                double cost = 0;
 
                 foreach (var node in _NodeList)
                 {
@@ -66,7 +66,7 @@ namespace _961数据结构.Tree
         {
             List<MinimumTreeNode> headnodes = new List<MinimumTreeNode>();
             Dictionary<String, MinimumTreeNode> NodeDic = new Dictionary<string, MinimumTreeNode>();
-            MinimumTreeNode head = null;
+
             _NodeList = new List<MinimumTreeNode>();
 
             foreach (var edge in edges)
@@ -130,11 +130,11 @@ namespace _961数据结构.Tree
                     {
                         MinimumTreeNode pnode = NodeDic[enode.ParentName];
                         MinimumTreeNode cnode = enode;
-                        int ccost = cnode.Cost;
+                        double ccost = cnode.Cost;
                         while (pnode != null)
                         {
                             string parentname = pnode.ParentName;
-                            int pcostback = pnode.Cost;
+                            double pcostback = pnode.Cost;
                             pnode.Childrens.Remove(cnode);
                             pnode.ParentName = cnode.Name;
                             pnode.Cost = ccost;

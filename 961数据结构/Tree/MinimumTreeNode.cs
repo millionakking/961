@@ -7,7 +7,7 @@ namespace _961数据结构.Tree
 
     public class MinimumTreeNode
     {
-        public int Cost { get; set; }
+        public double Cost { get; set; }
         public String Name { get; set; }
 
         public String ParentName { get; set; }

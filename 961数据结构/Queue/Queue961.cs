@@ -27,6 +27,11 @@ namespace _961数据结构.Queue
             return _head == _tail;
         }
 
+        public void clear()
+        {
+            _tail = _head;
+        }
+
         public int Count()
         {
             return (_tail - _head + TotalQueueNum) % TotalQueueNum;

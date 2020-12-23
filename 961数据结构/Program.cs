@@ -260,10 +260,19 @@ namespace _961数据结构
         {
             foreach (var se in nodes)
             {
-                if(string.IsNullOrEmpty(se.ParentName))
+                if (string.IsNullOrEmpty(se.ParentName))
                     Console.Write(String.Format("首节点 : {0} |", se.Name));
                 else
                     Console.Write(String.Format(" {0}-{1} |", se.ParentName, se.Name));
+            }
+        }
+
+        static void printGraphEdges(List<GraphEdge> edges)
+        {
+            foreach (var edge in edges)
+            {
+
+                Console.Write(String.Format(" {0}-{1} |", edge.StartNode.Name, edge.EndNode.Name));
             }
         }
 
@@ -654,7 +663,7 @@ namespace _961数据结构
             graph = new GraphAdjacencyMatrix(nodes.ToArray(), edges.ToArray());
 
 
-            
+
             var minitree = graph.miniGeneralTree_Prim(0);
             Console.WriteLine(String.Format("Prim 生成树: 代价{0}", minitree.TotalCost));
             Console.WriteLine("Prim 生成树: 生成路径:");
@@ -668,6 +677,43 @@ namespace _961数据结构
             minibuildsequence = minitree.BuildSequence;
             printMiniBuildTreeSequence(minibuildsequence);
             Console.WriteLine("");
+
+            List<GraphEdge> minidistance_edges = graph.MiniDistance_BSF(0, 6);
+            Console.WriteLine(String.Format("广度搜索 : 经过路径数 {0}", minidistance_edges.Count));
+            Console.WriteLine("广度搜索: 最短路径:");
+            printGraphEdges(minidistance_edges);
+            Console.WriteLine("");
+
+            var floydpath = graph.MiniDistance_Floyd();
+            Console.WriteLine("Floyd 搜索:");
+            for (int i = 0; i < graph.NodesCount; i++)
+                for (int j = 0; j < graph.NodesCount; j++)
+                {
+                    if (i == j)
+                        continue;
+
+                    minidistance_edges = floydpath.getShortPath(i, j);
+                    Console.WriteLine(String.Format("Floyd 搜索 : {0} - {1} 最短距离 {2}", graph.Nodes[i].Name, graph.Nodes[j].Name, floydpath.getShortDistance(i, j)));
+                    Console.WriteLine("Floyd 搜索: 最短路径:");
+                    printGraphEdges(minidistance_edges);
+                    Console.WriteLine("");
+                }
+
+            int startidx = 0;
+            var dijkstrapath = graph.MiniDistance_Dijkstra(startidx);
+            Console.WriteLine("Dijkstra 搜索:");
+            for (int i = 0; i < graph.NodesCount; i++)
+            {
+                if (i == startidx)
+                    continue;
+
+                minidistance_edges = dijkstrapath.getShortPath(i);
+                Console.WriteLine(String.Format("Dijkstra 搜索 : {0} - {1} 最短距离 {2}", graph.Nodes[startidx].Name, graph.Nodes[i].Name, dijkstrapath.getShortDistance(i)));
+                Console.WriteLine("Dijkstra 搜索: 最短路径:");
+                printGraphEdges(minidistance_edges);
+                Console.WriteLine("");
+            }
+                
         }
 
         static void Main(string[] args)

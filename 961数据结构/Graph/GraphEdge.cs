@@ -8,7 +8,7 @@ namespace _961数据结构.Graph
     {
         public GraphNode StartNode { get; set; }
         public GraphNode EndNode { get; set; }
-        public int Weights { get; set; }
+        public double Weights { get; set; }
 
         public int CompareTo(object obj)
         {

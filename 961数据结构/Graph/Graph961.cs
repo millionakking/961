@@ -23,6 +23,14 @@ namespace _961数据结构.Graph
 
         public abstract GraphEdge[] AllEdges { get; }
 
-        public abstract int getWeight(int startidx, int endidx);
+        //仅适用于有向无权图
+        public abstract List<GraphEdge> MiniDistance_BSF(int startidx, int destidx);
+        public abstract FloyPath MiniDistance_Floyd();
+
+        public abstract DijkstraPath MiniDistance_Dijkstra(int startidx);
+
+        protected abstract PathInfo[][] initFloyPath();
+
+        public abstract double getWeight(int startidx, int endidx);
     }
 }
